@@ -17,6 +17,12 @@ void mkdir(char pathName[]){
     char *dirName;
     struct NODE* newDir;
 
+    // checks pathname to see if it's empty
+    if(pathName[0] == '\0'){
+        printf("MKDIR ERROR: no path provided\n");
+        return;
+    }
+
     baseName = malloc(2000);
     dirName = malloc(2000);
 
@@ -30,8 +36,26 @@ void mkdir(char pathName[]){
     }
 
     child = parent->childPtr;
-    newDir = malloc(sizeof(struct NODE));
 
+    // checks if existing directory already exists
+    while (child != NULL){
+        if(strcmp(child->name, baseName) == 0){
+            printf("MKDIR ERROR: directory %s already exists \n", baseName);
+            free(baseName);
+            free(dirName);
+            return;
+        }
+        child = child->siblingPtr;
+    }
+
+    newDir = malloc(sizeof(struct NODE));
+    strcpy(newDir->name, baseName);
+    newDir->fileType = 'D';
+    newDir->parentPtr = parent;
+    newDir->siblingPtr = NULL;
+    newDir->childPtr = NULL;
+
+    // inserting new dir
     if(child == NULL){
         parent->childPtr = newDir;
     }
@@ -41,12 +65,11 @@ void mkdir(char pathName[]){
         }
         child->siblingPtr = newDir;
     }
-    strcpy(newDir->name, baseName);
-    newDir->fileType = 'D';
-    newDir->parentPtr = parent;
-    newDir->siblingPtr = NULL;
-    newDir->childPtr = NULL;
 
+    printf("MKDIR SUCCESS: node %s successfully created\n", baseName);
+    
+    free(baseName);
+    free(dirName);
 
     return;
 }
