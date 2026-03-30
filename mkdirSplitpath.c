@@ -18,7 +18,7 @@ void mkdir(char pathName[]){
     struct NODE* newDir;
 
     // checks pathname to see if it's empty
-    if(pathName[0] == '\0'){
+    if(pathName[0] == '\0' || strlen(pathName) == 0){
         printf("MKDIR ERROR: no path provided\n");
         return;
     }
