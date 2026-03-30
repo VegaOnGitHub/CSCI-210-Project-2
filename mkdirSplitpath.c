@@ -35,6 +35,13 @@ void mkdir(char pathName[]){
         return;
     }
 
+    if (baseName[0] == '\0'){
+        printf("MKDIR ERROR: no path provided\n");
+        free(baseName);
+        free(dirName);
+    return;
+}
+
     child = parent->childPtr;
 
     // checks if existing directory already exists
