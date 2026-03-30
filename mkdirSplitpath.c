@@ -56,6 +56,7 @@ void mkdir(char pathName[]){
     newDir->childPtr = NULL;
 
     // inserting new dir
+    child = parent->childPtr;  // <-- re-read the child list
     if(child == NULL){
         parent->childPtr = newDir;
     }
@@ -65,7 +66,6 @@ void mkdir(char pathName[]){
         }
         child->siblingPtr = newDir;
     }
-
     printf("MKDIR SUCCESS: node %s successfully created\n", baseName);
     
     free(baseName);
